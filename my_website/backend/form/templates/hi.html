@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{%load static%}
+
+<html lang="en">
+    <head>
+        <title>I'm Madina Dairova</title>
+        <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css"/> 
+        <script src="{% static 'main.js' %}"></script>
+    </head>
+    <body>
+        <div class="sticky header" width="100%" cellpadding="5" bgcolor="#EDDD9E">
+            <header>
+                <div class="container">
+                    <div class="navbar">
+                        <nav class="navigation bar">
+                            <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about_me">About me</a> </li>
+                            <li><a href="#projects">Projects</a> </li>
+                            <li><a href="#leadership">Leadership</a> </li>
+                            <li><a href="#awards">Awards</a> </li>
+                            <li><a href="#contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a href="mailto:dairova.m05@gmail.com"> 
+                        <button type="button" class="contacting">Contact me</button></a>
+                    <form method="get" action="{% static 'my_resume.pdf' %}" class="cv">
+                            <button type="submit">Download CV</button>
+                    </form>
+                </div>
+                
+            </header>
+        </div>
+
+        <a name="home"></a>
+        <div class="welcome" style="background-image: url('{% static 'my_pic.jpg' %}');">
+            <p>Hey there! I'm</p>
+            <h2 width="50%">Madina Dairova</h2>
+        </div>
+
+        <div class="about_me">
+            <a name="about_me"></a>
+            <h1>About me</h1>
+            <p>I am a 2nd year undergraduate Computer Science student at Nazarbayev University. Right now i am pursuing a career in Backend Development, so please don't judge the appearance of this website! <br>
+            </p>
+            <h3>My personality type is ENTJ</h3>
+        </div>
+        
+        <div class = "projects">
+        <a name="projects"></a>
+            <h2>Projects</h2>
+        <h3>CookUi</h3>
+        <p><strong>Technologies used:</strong> HTML, CSS, PHP, JavaScript</p>
+        <p><strong>Duration:</strong> August 2020 - October 2020</p>
+        <ul>
+            <li>Developed a user-oriented website that collected cooking recipes for national dishes around the world.</li>
+            <li>Created a ranking structure where users can compete in learning and uploading new recipes.</li>
+            <li>Collaborated with the school Cooking club to distribute and test the usage of the website among students.</li>
+            <li>Won 2nd place in the Regional IT Project competition.</li>
+        </ul>
+        <h3>Qazaqiia</h3>
+        <p><strong>Duration:</strong> June 2020 - October 2021</p>
+        <ul>
+            <li>Established a media platform that focused on contributing to our local discourses of self-improvement and psychology.</li>
+            <li>Offered free personal and group therapy sessions with professionals.</li>
+        </ul>
+        </div>
+
+        <div class="leadership">
+            <a name="leadership"></a>
+            <h2>Leadership Experience</h2>
+        <h3>Marketing Department Leader - Nazarbayev University ACM & ACM-W Student Chapter</h3>
+        <p>August 2023 - Present</p>
+        <ul>
+            <li>Developed a marketing strategy for promoting ACM events.</li>
+        </ul>
+
+        <h3>Chair - Kazakh-Turkish High School for Gifted Girls Math & Coding School Club</h3>
+        <p>September 2019 - May 2021</p>
+        <ul>
+            <li>Established a Math Olympiad association at my school.</li>
+            <li>Created a competitive programming community, members of which won several places in national competitions.</li>
+        </ul>
+        </div>
+        <div class="awards">
+            <a name="awards"></a>
+            <h2>Awards</h2>
+        <ul>
+            <li>1st place - Nazarbayev University CodeW 2023, ACM SC (Won a competitive programming competition targeted at women's empowerment.)</li>
+        </ul>
+        </div>
+
+        <section id="testimonials" class="testimonials section-bg">
+            <div class="container">
+      
+              <div class="section-title">
+                <h2>Testimonials</h2>
+                <p>The people who worked with me adn their experience:</p>
+              </div>
+      
+              <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+      
+                  <div class="swiper-slide">
+                    {% for feature in features%}
+                        {% if feature.review == True%}
+                        <div class="testimonial-item">
+                            <a href="{{ feature.image.url }}">
+                                <img src="{{ feature.image.url }}" alt="Testimonial pic" style="width:20%">
+                            </a>
+                          <h3>{{feature.name}} {{feature.surname}}</h3>
+                          <a href="mailto:{{ feature.email_adress }}">Email</a> |
+                          <a href="{{ feature.linkedin_url }}">LinkedIn</a>
+                          <h4>{{feature.connection}}</h4>
+                          <p>
+                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                            "{{feature.details}}"
+                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                          </p>
+                        </div>
+                        {%endif%}
+                      </div>
+                        {% endfor %}
+                  </div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+      
+            </div>
+          </section>
+          <section id="form_contact">
+            <div class="form">
+            <form method="POST" action="giveref">
+            {% csrf_token %}
+            <h4>Leave a message about your work experience with me!</h4>
+            <label for="fname">First name:</label> <br>
+            <input type="text" name="fname"><br>
+            <label for="sname">Second name:</label> <br>
+            <input type="text" name="sname"><br>
+            <label for="sname">Connection to me (a friend, boss, or colleague at X company):</label> <br>
+            <input type="text" name="connection"><br>
+            <label for="image" name = "image">Upload your image:</label>
+            {{ form.as_p }}
+            <input type="file" id="file" placeholder="upload your image" name="image"> <br>
+            <label for="email_url">Email:</label> <br>
+            <input type="text" name="email_url"><br>
+            <label for="linkedin_url">LinkedIn:</label> <br>
+            <input type="text" name="linkedin_url"><br>
+            <label for="details">Write about your experience with me:</label><br>
+            <textarea name="text" rows="10" cols="50"></textarea> <br>
+            <input type="submit"/> <br>
+            </form>
+            </div>
+            <div class="socials">
+                <h4>Follow my socials!</h4>
+                    <a href="https://www.instagram.com/madddinq/" class="instagram"><button type="button" class="instagram"><img src="data:image/png;base64,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"></button><i class="bx bxl-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/madina-dairova-389290270/" class="linkedin"><button type="button" class="linkedin"><img src="data:image/png;base64,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"></button><i class="bx bxl-linkedin"></i></a>
+                    <a href="https://github.com/matonyn" class="github"><button type="button" class="github"><img src="data:image/png;base64,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"></button><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </section>
+        
+
+    <div class="contact">
+        <a name="contact"></a>
+        <hr width="100%">
+        <address>
+        Madina Dairova<br>
+        Student at Nazarbayev University<br>
+        +77755967939
+        </address>
+        <p>Contact me at <a href="mailto:dairova.m05@gmail.com">dairova.m05@gmail.com</a> </p> 
+    </div>
+
+    </body>
+</html>
